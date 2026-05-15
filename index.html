@@ -2362,5 +2362,31 @@ function renderPage() {
   currentPage = initHash;
   renderPage();
   </script>
+  <script>
+if ('mediaSession' in navigator) {
+  navigator.mediaSession.metadata = new MediaMetadata({
+    title: 'Autumn',
+    artist: 'Ben&Ben',
+    album: 'JustInLoveWithRose',
+    artwork: [
+      {
+        src: 'images/apple-touch-icon.png',
+        sizes: '180x180',
+        type: 'image/png'
+      },
+      {
+        src: 'images/android-chrome-192x192.png',
+        sizes: '192x192',
+        type: 'image/png'
+      },
+      {
+        src: 'images/android-chrome-512x512.png',
+        sizes: '512x512',
+        type: 'image/png'
+      }
+    ]
+  });
+}
+</script>
 </body>
 </html>
