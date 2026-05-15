@@ -1,0 +1,2356 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" href="https://public-frontend-cos.metadl.com/mgx/img/favicon_atoms.ico" type="image/x-icon">
+  <title>#JustInLoveWithRose</title>
+  <style>
+    /* ===== RESET & BASE ===== */
+    *, *::before, *::after {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #1a0a2e 0%, #2d1b4e 30%, #1a0a2e 60%, #0d0520 100%);
+      color: #f0e6ff;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* PROFILE PIC */
+.profile-pic{
+  width:65px;
+  height:65px;
+  border-radius:50%;
+  object-fit:cover;
+  border:3px solid var(--primary-pink);
+  box-shadow:0 0 20px rgba(255,107,157,0.5);
+  flex-shrink:0;
+}
+/* Mobile */
+@media(max-width:768px){
+
+  .chat-message{
+    gap:12px;
+  }
+
+  .profile-pic{
+    width:55px;
+    height:55px;
+  }
+
+  .message-bubble{
+    padding:18px;
+    font-size:0.95rem;
+  }
+
+}
+
+.chat-message.me .profile-pic{
+  order:2;
+  border:3px solid #fff;
+}
+
+/* PROFILE PIC */
+.profile-pic{
+  width:65px;
+  height:65px;
+  border-radius:50%;
+  object-fit:cover;
+  border:3px solid var(--primary-pink);
+  box-shadow:0 0 20px rgba(255,107,157,0.5);
+  flex-shrink:0;
+}
+
+    /* ===== FLOATING HEARTS ===== */
+    .floating-hearts {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      pointer-events: none;
+      z-index: 0;
+      overflow: hidden;
+    }
+
+    .floating-heart {
+      position: absolute;
+      bottom: -50px;
+      animation: floatUp linear infinite;
+      opacity: 0.25;
+    }
+
+    @keyframes floatUp {
+      0% { transform: translateY(0) rotate(0deg); opacity: 0.25; }
+      50% { opacity: 0.5; }
+      100% { transform: translateY(-110vh) rotate(360deg); opacity: 0; }
+    }
+
+    /* ===== HEADER ===== */
+    header {
+      background: rgba(30, 15, 60, 0.85);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(255, 105, 180, 0.2);
+      padding: 16px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    header h1 {
+      font-size: 1.3rem;
+      background: linear-gradient(135deg, #ff69b4, #ff1493, #ff69b4);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      cursor: pointer;
+    }
+
+    .menu-toggle {
+      display: none;
+      background: none;
+      border: none;
+      color: #ff69b4;
+      cursor: pointer;
+      width: 32px; height: 32px;
+    }
+
+    nav {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    nav a {
+      color: #d4a8ff;
+      text-decoration: none;
+      font-size: 0.85rem;
+      padding: 6px 12px;
+      border-radius: 20px;
+      transition: all 0.3s;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      cursor: pointer;
+    }
+
+    nav a:hover, nav a.active-nav {
+      background: rgba(255, 105, 180, 0.15);
+      color: #ff69b4;
+    }
+
+    @media (max-width: 768px) {
+      .menu-toggle { display: block; }
+      nav {
+        display: none;
+        position: absolute;
+        top: 100%; left: 0; right: 0;
+        background: rgba(30, 15, 60, 0.95);
+        backdrop-filter: blur(12px);
+        padding: 16px;
+        flex-direction: column;
+        border-bottom: 1px solid rgba(255, 105, 180, 0.2);
+      }
+      nav.active { display: flex; }
+    }
+
+    /* ===== PAGE CONTENT ===== */
+    .page-content {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 32px 20px 100px;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* ===== GENERIC PAGE STYLES ===== */
+    .page-hero {
+      text-align: center;
+      padding: 48px 20px;
+    }
+
+    .page-hero h2 {
+      font-size: 2.2rem;
+      margin-bottom: 12px;
+      background: linear-gradient(135deg, #ff69b4, #ff1493);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .page-hero p {
+      color: #d4a8ff;
+      font-size: 1rem;
+      opacity: 0.85;
+      max-width: 600px;
+      margin: 0 auto;
+      line-height: 1.7;
+    }
+
+    .page-card {
+      background: rgba(255, 255, 255, 0.04);
+      backdrop-filter: blur(8px);
+      border: 1px solid rgba(255, 105, 180, 0.15);
+      border-radius: 20px;
+      padding: 28px;
+      margin-bottom: 20px;
+      transition: all 0.3s;
+    }
+
+    .page-card:hover {
+      border-color: rgba(255, 105, 180, 0.3);
+      box-shadow: 0 4px 20px rgba(255, 105, 180, 0.1);
+    }
+
+    .page-card h3 {
+      color: #ff69b4;
+      font-size: 1.2rem;
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .page-card p {
+      color: #d4a8ff;
+      line-height: 1.7;
+      font-size: 0.95rem;
+    }
+
+    .page-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 16px;
+      margin-top: 24px;
+    }
+
+  
+    .gallery-placeholder {
+      width: 100%;
+      aspect-ratio: 1;
+      border-radius: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 3rem;
+      transition: transform 0.3s;
+    }
+
+    .gallery-placeholder:hover {
+      transform: scale(1.05);
+    }
+
+    .message-bubble {
+      background: rgba(255, 105, 180, 0.08);
+      border: 1px solid rgba(255, 105, 180, 0.15);
+      border-radius: 20px 20px 20px 4px;
+      padding: 16px 20px;
+      margin-bottom: 16px;
+      max-width: 80%;
+      position: relative;
+    }
+
+    .message-bubble.right {
+      margin-left: auto;
+      border-radius: 20px 20px 4px 20px;
+      background: rgba(147, 51, 234, 0.1);
+      border-color: rgba(147, 51, 234, 0.2);
+    }
+
+    .message-bubble .sender {
+      font-size: 0.75rem;
+      color: #ff69b4;
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
+
+    .message-bubble p {
+      color: #d4a8ff;
+      font-size: 0.9rem;
+      line-height: 1.6;
+    }
+
+    .surprise-box {
+      text-align: center;
+      padding: 60px 20px;
+    }
+
+    .surprise-emoji {
+      font-size: 6rem;
+      animation: bounce 2s ease-in-out infinite;
+      display: inline-block;
+    }
+
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-20px); }
+    }
+
+    .surprise-box h2 {
+      font-size: 2rem;
+      margin: 20px 0 12px;
+      background: linear-gradient(135deg, #ff69b4, #ff1493);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .surprise-box p {
+      color: #d4a8ff;
+      font-size: 1.05rem;
+      line-height: 1.8;
+      max-width: 500px;
+      margin: 0 auto;
+    }
+
+    /* ===== MUSIC SECTION ===== */
+    .music-section h2 {
+      text-align: center;
+      font-size: 2rem;
+      margin-bottom: 8px;
+      background: linear-gradient(135deg, #ff69b4, #ff1493);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .music-subtitle {
+      text-align: center;
+      color: #d4a8ff;
+      font-size: 0.95rem;
+      margin-bottom: 32px;
+      opacity: 0.8;
+    }
+
+    /* ===== NOW PLAYING ===== */
+    .now-playing {
+      background: linear-gradient(135deg, rgba(255, 105, 180, 0.12), rgba(147, 51, 234, 0.12));
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 105, 180, 0.25);
+      border-radius: 20px;
+      padding: 28px;
+      margin-bottom: 36px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .now-playing::before {
+      content: '';
+      position: absolute;
+      top: -50%; left: -50%;
+      width: 200%; height: 200%;
+      background: radial-gradient(circle, rgba(255, 105, 180, 0.05) 0%, transparent 70%);
+      animation: rotateGlow 8s linear infinite;
+    }
+
+    @keyframes rotateGlow {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    .now-playing-content {
+      position: relative;
+      z-index: 1;
+    }
+
+    .now-playing-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(255, 105, 180, 0.15);
+      padding: 6px 16px;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      color: #ff69b4;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      margin-bottom: 16px;
+    }
+
+    .pulse-dot {
+      width: 8px; height: 8px;
+      background: #ff1493;
+      border-radius: 50%;
+      animation: pulseDot 1.5s ease-in-out infinite;
+    }
+
+    @keyframes pulseDot {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.4; transform: scale(0.7); }
+    }
+
+    .now-playing-disc {
+      width: 120px; height: 120px;
+      margin: 0 auto 16px;
+      border-radius: 50%;
+      background: conic-gradient(from 0deg, #1a0a2e, #2d1b4e, #ff69b4, #9333ea, #1a0a2e);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      box-shadow: 0 0 30px rgba(255, 105, 180, 0.3);
+    }
+
+    .now-playing-disc.spinning {
+      animation: spin 4s linear infinite;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    .disc-center {
+      width: 40px; height: 40px;
+      background: radial-gradient(circle, #2d1b4e 40%, #1a0a2e 100%);
+      border-radius: 50%;
+      border: 2px solid rgba(255, 105, 180, 0.4);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1rem;
+    }
+
+    .disc-ring {
+      position: absolute;
+      width: 80px; height: 80px;
+      border-radius: 50%;
+      border: 1px solid rgba(255, 105, 180, 0.15);
+    }
+
+    .now-playing-title {
+      font-size: 1.4rem;
+      color: #fff;
+      margin-bottom: 4px;
+      font-weight: 700;
+    }
+
+    .now-playing-artist {
+      color: #d4a8ff;
+      font-size: 0.9rem;
+      margin-bottom: 20px;
+    }
+
+    /* Audio Visualizer */
+    .visualizer {
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+      gap: 3px;
+      height: 32px;
+      margin-bottom: 20px;
+    }
+
+    .visualizer-bar {
+      width: 4px;
+      background: linear-gradient(to top, #ff69b4, #9333ea);
+      border-radius: 2px;
+      transition: height 0.15s ease;
+    }
+
+    .visualizer.active .visualizer-bar {
+      animation: visualize 0.8s ease-in-out infinite alternate;
+    }
+
+    .visualizer-bar:nth-child(1) { animation-delay: 0s; }
+    .visualizer-bar:nth-child(2) { animation-delay: 0.1s; }
+    .visualizer-bar:nth-child(3) { animation-delay: 0.2s; }
+    .visualizer-bar:nth-child(4) { animation-delay: 0.05s; }
+    .visualizer-bar:nth-child(5) { animation-delay: 0.15s; }
+    .visualizer-bar:nth-child(6) { animation-delay: 0.25s; }
+    .visualizer-bar:nth-child(7) { animation-delay: 0.08s; }
+    .visualizer-bar:nth-child(8) { animation-delay: 0.18s; }
+    .visualizer-bar:nth-child(9) { animation-delay: 0.12s; }
+    .visualizer-bar:nth-child(10) { animation-delay: 0.22s; }
+    .visualizer-bar:nth-child(11) { animation-delay: 0.03s; }
+    .visualizer-bar:nth-child(12) { animation-delay: 0.13s; }
+    .visualizer-bar:nth-child(13) { animation-delay: 0.07s; }
+    .visualizer-bar:nth-child(14) { animation-delay: 0.17s; }
+    .visualizer-bar:nth-child(15) { animation-delay: 0.09s; }
+    .visualizer-bar:nth-child(16) { animation-delay: 0.19s; }
+
+    @keyframes visualize {
+      0% { height: 4px; }
+      100% { height: 32px; }
+    }
+
+    /* Custom Audio Controls */
+    .audio-controls {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 16px;
+      margin-bottom: 16px;
+    }
+
+    .ctrl-btn {
+      background: none;
+      border: none;
+      color: #d4a8ff;
+      cursor: pointer;
+      transition: all 0.3s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .ctrl-btn:hover {
+      color: #ff69b4;
+      transform: scale(1.1);
+    }
+
+    .ctrl-btn.play-btn {
+      width: 56px; height: 56px;
+      background: linear-gradient(135deg, #ff69b4, #ff1493);
+      border-radius: 50%;
+      color: white;
+      box-shadow: 0 4px 20px rgba(255, 105, 180, 0.4);
+    }
+
+    .ctrl-btn.play-btn:hover {
+      transform: scale(1.08);
+      box-shadow: 0 6px 28px rgba(255, 105, 180, 0.6);
+      color: white;
+    }
+
+    /* Progress Bar */
+    .progress-container {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 0 8px;
+    }
+
+    .progress-time {
+      font-size: 0.75rem;
+      color: #d4a8ff;
+      min-width: 36px;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .progress-bar-wrapper {
+      flex: 1;
+      height: 6px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 3px;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .progress-bar-fill {
+      height: 100%;
+      background: linear-gradient(90deg, #ff69b4, #ff1493);
+      border-radius: 3px;
+      width: 0%;
+      transition: width 0.3s linear;
+    }
+
+    audio { display: none; }
+
+    /* ===== SONG LIST ===== */
+    .song-list-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 16px;
+    }
+
+    .song-list-title {
+      font-size: 1.1rem;
+      color: #ff69b4;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .song-count {
+      font-size: 0.8rem;
+      color: #d4a8ff;
+      opacity: 0.7;
+    }
+
+    .song-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .song-item {
+      background: rgba(255, 255, 255, 0.04);
+      backdrop-filter: blur(8px);
+      border: 1px solid rgba(255, 105, 180, 0.1);
+      border-radius: 14px;
+      padding: 14px 18px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .song-item::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: linear-gradient(135deg, rgba(255, 105, 180, 0.08), rgba(147, 51, 234, 0.08));
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+
+    .song-item:hover::before,
+    .song-item.active::before {
+      opacity: 1;
+    }
+
+    .song-item:hover {
+      transform: translateX(4px);
+      border-color: rgba(255, 105, 180, 0.3);
+      box-shadow: 0 4px 20px rgba(255, 105, 180, 0.1);
+    }
+
+    .song-item.active {
+      border-color: rgba(255, 105, 180, 0.4);
+      box-shadow: 0 4px 24px rgba(255, 105, 180, 0.15);
+    }
+
+    .song-number {
+      font-size: 0.85rem;
+      color: #d4a8ff;
+      opacity: 0.5;
+      min-width: 20px;
+      text-align: center;
+      font-weight: 600;
+      position: relative;
+      z-index: 1;
+    }
+
+    .song-item.active .song-number,
+    .song-item:hover .song-number {
+      opacity: 0;
+    }
+
+    .song-play-indicator {
+      position: absolute;
+      left: 18px;
+      opacity: 0;
+      z-index: 2;
+      color: #ff69b4;
+      transition: opacity 0.3s;
+    }
+
+    .song-item:hover .song-play-indicator {
+      opacity: 1;
+    }
+
+    .song-item.active .song-play-indicator {
+      opacity: 1;
+    }
+
+    .mini-bars {
+      display: flex;
+      align-items: flex-end;
+      gap: 2px;
+      height: 14px;
+    }
+
+    .mini-bar {
+      width: 3px;
+      background: #ff69b4;
+      border-radius: 1px;
+      animation: miniVisualize 0.6s ease-in-out infinite alternate;
+    }
+
+    .mini-bar:nth-child(1) { animation-delay: 0s; height: 6px; }
+    .mini-bar:nth-child(2) { animation-delay: 0.15s; height: 10px; }
+    .mini-bar:nth-child(3) { animation-delay: 0.3s; height: 8px; }
+
+    @keyframes miniVisualize {
+      0% { height: 4px; }
+      100% { height: 14px; }
+    }
+
+    .song-thumb {
+      width: 48px; height: 48px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.4rem;
+      flex-shrink: 0;
+      position: relative;
+      z-index: 1;
+    }
+
+    .song-thumb-1 { background: linear-gradient(135deg, #ff69b4, #ff1493); }
+    .song-thumb-2 { background: linear-gradient(135deg, #9333ea, #7c3aed); }
+    .song-thumb-3 { background: linear-gradient(135deg, #ec4899, #db2777); }
+    .song-thumb-4 { background: linear-gradient(135deg, #a855f7, #9333ea); }
+    .song-thumb-5 { background: linear-gradient(135deg, #f472b6, #ec4899); }
+    .song-thumb-6 { background: linear-gradient(135deg, #c084fc, #a855f7); }
+    .song-thumb-7 { background: linear-gradient(135deg, #fb7185, #f43f5e); }
+    .song-thumb-8 { background: linear-gradient(135deg, #818cf8, #6366f1); }
+
+    .song-details {
+      flex: 1;
+      min-width: 0;
+      position: relative;
+      z-index: 1;
+    }
+
+    .song-details h3 {
+      font-size: 0.95rem;
+      color: #fff;
+      margin-bottom: 2px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .song-item.active .song-details h3 {
+      color: #ff69b4;
+    }
+
+    .song-details p {
+      font-size: 0.8rem;
+      color: #d4a8ff;
+      opacity: 0.7;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .song-dedication {
+      font-size: 0.75rem;
+      color: #ff69b4;
+      opacity: 0;
+      margin-top: 4px;
+      font-style: italic;
+      transition: opacity 0.3s;
+    }
+
+    .song-item:hover .song-dedication,
+    .song-item.active .song-dedication {
+      opacity: 0.8;
+    }
+
+    .song-duration {
+      font-size: 0.8rem;
+      color: #d4a8ff;
+      opacity: 0.5;
+      position: relative;
+      z-index: 1;
+    }
+
+    .song-heart {
+      color: #ff1493;
+      font-size: 0.9rem;
+      opacity: 0;
+      transition: all 0.3s;
+      position: relative;
+      z-index: 1;
+      cursor: pointer;
+    }
+
+    .song-item:hover .song-heart {
+      opacity: 0.6;
+    }
+
+    .song-heart.liked {
+      opacity: 1 !important;
+      animation: heartPop 0.4s ease;
+    }
+
+    @keyframes heartPop {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.4); }
+      100% { transform: scale(1); }
+    }
+
+    /* ===== SPOTIFY EMBED SECTION ===== */
+    .spotify-section {
+      margin-top: 40px;
+    }
+
+    .spotify-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 16px;
+    }
+
+    .spotify-icon {
+      width: 24px; height: 24px;
+      color: #1DB954;
+    }
+
+    .spotify-header h3 {
+      font-size: 1.1rem;
+      color: #ff69b4;
+      font-weight: 600;
+    }
+
+    .spotify-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 14px;
+    }
+
+    .spotify-embed {
+      border-radius: 12px;
+      overflow: hidden;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 105, 180, 0.1);
+      transition: all 0.3s;
+    }
+
+    .spotify-embed:hover {
+      border-color: rgba(255, 105, 180, 0.3);
+      box-shadow: 0 4px 20px rgba(255, 105, 180, 0.1);
+    }
+
+    .spotify-embed iframe {
+      display: block;
+      width: 100%;
+      border: none;
+    }
+
+    /* ===== PERSISTENT MINI PLAYER ===== */
+    .mini-player {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: rgba(20, 10, 40, 0.95);
+      backdrop-filter: blur(16px);
+      border-top: 1px solid rgba(255, 105, 180, 0.25);
+      padding: 10px 20px;
+      display: none;
+      align-items: center;
+      gap: 14px;
+      z-index: 200;
+      box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.4);
+    }
+
+    .mini-player.visible {
+      display: flex;
+    }
+
+    .mini-player-disc {
+      width: 42px; height: 42px;
+      border-radius: 50%;
+      background: conic-gradient(from 0deg, #1a0a2e, #2d1b4e, #ff69b4, #9333ea, #1a0a2e);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      box-shadow: 0 0 12px rgba(255, 105, 180, 0.3);
+    }
+
+    .mini-player-disc.spinning {
+      animation: spin 4s linear infinite;
+    }
+
+    .mini-player-disc-center {
+      width: 16px; height: 16px;
+      background: radial-gradient(circle, #2d1b4e 40%, #1a0a2e 100%);
+      border-radius: 50%;
+      border: 1px solid rgba(255, 105, 180, 0.4);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.5rem;
+    }
+
+    .mini-player-info {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .mini-player-title {
+      font-size: 0.85rem;
+      color: #fff;
+      font-weight: 600;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .mini-player-artist {
+      font-size: 0.75rem;
+      color: #d4a8ff;
+      opacity: 0.7;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .mini-player-progress {
+      flex: 1;
+      max-width: 300px;
+      height: 4px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 2px;
+      cursor: pointer;
+      overflow: hidden;
+    }
+
+    .mini-player-progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, #ff69b4, #ff1493);
+      border-radius: 2px;
+      width: 0%;
+      transition: width 0.3s linear;
+    }
+
+    .mini-player-time {
+      font-size: 0.7rem;
+      color: #d4a8ff;
+      opacity: 0.6;
+      min-width: 36px;
+      text-align: center;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .mini-player-controls {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .mini-ctrl-btn {
+      background: none;
+      border: none;
+      color: #d4a8ff;
+      cursor: pointer;
+      transition: all 0.3s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 4px;
+    }
+
+    .mini-ctrl-btn:hover {
+      color: #ff69b4;
+      transform: scale(1.1);
+    }
+
+    .mini-ctrl-btn.mini-play-btn {
+      width: 36px; height: 36px;
+      background: linear-gradient(135deg, #ff69b4, #ff1493);
+      border-radius: 50%;
+      color: white;
+      box-shadow: 0 2px 12px rgba(255, 105, 180, 0.3);
+    }
+
+    .mini-ctrl-btn.mini-play-btn:hover {
+      transform: scale(1.08);
+      color: white;
+    }
+
+    
+
+    .mini-player-visualizer {
+      display: flex;
+      align-items: flex-end;
+      gap: 2px;
+      height: 18px;
+    }
+
+    .mini-vis-bar {
+      width: 3px;
+      background: linear-gradient(to top, #ff69b4, #9333ea);
+      border-radius: 1px;
+      height: 4px;
+      transition: height 0.15s ease;
+    }
+
+    .mini-player-visualizer.active .mini-vis-bar {
+      animation: miniVis 0.7s ease-in-out infinite alternate;
+    }
+
+    .mini-vis-bar:nth-child(1) { animation-delay: 0s; }
+    .mini-vis-bar:nth-child(2) { animation-delay: 0.12s; }
+    .mini-vis-bar:nth-child(3) { animation-delay: 0.06s; }
+    .mini-vis-bar:nth-child(4) { animation-delay: 0.18s; }
+    .mini-vis-bar:nth-child(5) { animation-delay: 0.09s; }
+
+    @keyframes miniVis {
+      0% { height: 3px; }
+      100% { height: 18px; }
+    }
+
+    @media (max-width: 600px) {
+      .mini-player-progress { display: none; }
+      .mini-player-time { display: none; }
+      .mini-player { gap: 10px; padding: 8px 14px; }
+    }
+
+    /* ===== FOOTER ===== */
+    footer {
+      text-align: center;
+      padding: 24px;
+      color: #d4a8ff;
+      font-size: 0.85rem;
+      border-top: 1px solid rgba(255, 105, 180, 0.1);
+      position: relative;
+      z-index: 1;
+    }
+
+    footer span {
+      color: #ff1493;
+      animation: heartbeat 1.5s infinite;
+      display: inline-block;
+    }
+
+    @keyframes heartbeat {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.2); }
+    }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 480px) {
+      .now-playing { padding: 20px 16px; }
+      .now-playing-disc { width: 90px; height: 90px; }
+      .disc-ring { width: 60px; height: 60px; }
+      .disc-center { width: 30px; height: 30px; font-size: 0.8rem; }
+      .song-item { padding: 10px 14px; gap: 10px; }
+      .song-thumb { width: 40px; height: 40px; font-size: 1.1rem; }
+      .spotify-grid { grid-template-columns: 1fr; }
+      .page-hero h2 { font-size: 1.6rem; }
+    }
+
+    /* Page transition */
+    .page-view {
+      animation: fadeIn 0.3s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Floating Hearts -->
+  <div class="floating-hearts" id="floating-hearts"></div>
+
+  <!-- Header -->
+  <header>
+    <h1 onclick="navigateTo('home')">#JustInLoveWithRose</h1>
+    <button class="menu-toggle" id="menu-toggle" aria-label="Toggle menu">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+    </button>
+    <nav id="main-nav">
+      <a onclick="navigateTo('home')" data-page="home"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg> Home</a>
+      <a onclick="navigateTo('about')" data-page="about"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg> About</a>
+      <a onclick="navigateTo('gallery')" data-page="gallery"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg> Gallery</a>
+      <a onclick="navigateTo('timeline')" data-page="timeline"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> Timeline</a>
+      <a onclick="navigateTo('messages')" data-page="messages"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg> Messages</a>
+      <a onclick="navigateTo('music')" data-page="music"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg> Music</a>
+      <a onclick="navigateTo('surprise')" data-page="surprise"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 12 20 22 4 22 4 12"/><rect x="2" y="7" width="20" height="5"/><line x1="12" y1="22" x2="12" y2="7"/><path d="M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7z"/><path d="M12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z"/></svg> Surprise</a>
+    </nav>
+  </header>
+
+  <!-- Page Content Container -->
+  <div class="page-content" id="page-content">
+    <!-- Content injected by JS -->
+  </div>
+
+  <!-- Persistent Audio Element (never removed from DOM) -->
+  <audio id="audio-player" preload="auto"></audio>
+
+  <!-- Persistent Mini Player Bar -->
+  <div class="mini-player" id="mini-player">
+    <div class="mini-player-disc" id="mini-disc">
+      <div class="mini-player-disc-center">🎵</div>
+    </div>
+    <div class="mini-player-info">
+      <div class="mini-player-title" id="mini-title">No song selected</div>
+      <div class="mini-player-artist" id="mini-artist">—</div>
+    </div>
+    <div class="mini-player-visualizer" id="mini-visualizer">
+      <div class="mini-vis-bar"></div>
+      <div class="mini-vis-bar"></div>
+      <div class="mini-vis-bar"></div>
+      <div class="mini-vis-bar"></div>
+      <div class="mini-vis-bar"></div>
+    </div>
+    <span class="mini-player-time" id="mini-current-time">0:00</span>
+    <div class="mini-player-progress" id="mini-progress-wrapper">
+      <div class="mini-player-progress-fill" id="mini-progress-fill"></div>
+    </div>
+    <span class="mini-player-time" id="mini-total-time">0:00</span>
+    <div class="mini-player-controls">
+      <button class="mini-ctrl-btn" id="mini-prev-btn" title="Previous">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M6 6h2v12H6zm3.5 6l8.5 6V6z"/></svg>
+      </button>
+      <button class="mini-ctrl-btn mini-play-btn" id="mini-play-btn" title="Play/Pause">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" id="mini-play-icon"><polygon points="8,5 19,12 8,19"/></svg>
+      </button>
+      <button class="mini-ctrl-btn" id="mini-next-btn" title="Next">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M6 18l8.5-6L6 6v12zM16 6v12h2V6h-2z"/></svg>
+      </button>
+    </div>
+  </div>
+
+<!-- Footer -->
+<footer style="text-align:center; padding:20px; font-size:14px; color:#fff; opacity:0.9;">
+  
+  <div style="margin-bottom:6px; font-size:16px;">
+    <strong>Mr. Justin Joe Molina Guillermo & Ms. Rose Jane Lumacad Jumao-as</strong>
+  </div>
+
+  <div style="font-size:12px; opacity:0.7; letter-spacing:1px;">
+    Forever begins here • <strong>02.23.25</strong>
+  </div>
+
+</footer>
+
+  <script>
+  // ===================================================================
+  // SONG DATA — UPDATE THE "file" PATHS TO MATCH YOUR MP3 FILENAMES
+  // Place your MP3 files in a "music" folder next to this HTML file.
+  // Example:
+  //   index.html
+  //   music/
+  //     palagi.mp3
+  //     bawat-piyesa.mp3
+  //     ...
+  // ===================================================================
+var songs = [
+  { 
+    title: "Autumn", 
+    artist: "Ben&Ben", 
+    emoji: "🎤", 
+    file: "music/autumn.mp3", 
+    duration: "4:03", 
+    dedication: "Like autumn leaves, I fell for you naturally 🍂" 
+  },
+
+  { 
+    title: "Araw Araw", 
+    artist: "Ben&Ben", 
+    emoji: "🎵", 
+    file: "music/araw-araw.mp3", 
+    duration: "5:16", 
+    dedication: "I choose you every single day ❤️" 
+  },
+
+  { 
+    title: "Langyang Pag-Ibig", 
+    artist: "Ben&Ben", 
+    emoji: "🎶", 
+    file: "music/pag-ibig.mp3", 
+    duration: "4:21", 
+    dedication: "Crazy in love with you and I don't mind 💞" 
+  },
+
+  { 
+    title: "Leaves", 
+    artist: "Nobita", 
+    emoji: "🎸", 
+    file: "music/leaves.mp3", 
+    duration: "5:21", 
+    dedication: "Even when seasons change, I'll stay 🍃" 
+  },
+
+  { 
+    title: "Lifetime (Reimagined)", 
+    artist: "Ben&Ben", 
+    emoji: "💿", 
+    file: "music/lifetime.mp3", 
+    duration: "4:37", 
+    dedication: "If I had another lifetime, I'd still choose you ♾️" 
+  },
+
+  { 
+    title: "Pagtingin", 
+    artist: "Ben&Ben", 
+    emoji: "🎹", 
+    file: "music/pagtingin.mp3", 
+    duration: "5:02", 
+    dedication: "One look at you and my world stops 💖" 
+  },
+
+  { 
+    title: "Paninindigan Kita", 
+    artist: "Ben&Ben", 
+    emoji: "🌹", 
+    file: "music/paninindigan.mp3", 
+    duration: "5:09", 
+    dedication: "No matter what happens, I'll stand by you 🤍" 
+  },
+
+  { 
+    title: "Saranggola", 
+    artist: "Ben&Ben", 
+    emoji: "✨", 
+    file: "music/saranggola.mp3", 
+    duration: "4:26", 
+    dedication: "You make my heart feel light and free 🪁" 
+  },
+
+  { 
+    title: "Kathang Isip", 
+    artist: "Ben&Ben", 
+    emoji: "✨", 
+    file: "music/kathang.mp3", 
+    duration: "5:18", 
+    dedication: "You were once just a dream, now you're my reality 🌙" 
+  },
+
+  { 
+    title: "Ride Home", 
+    artist: "Ben&Ben", 
+    emoji: "🚗", 
+    file: "music/ride-home.mp3", 
+    duration: "4:26", 
+    dedication: "Every road feels better when it's with you 🛣️" 
+  },
+
+  { 
+    title: "Sa Susunod Na Habang Buhay", 
+    artist: "Ben&Ben", 
+    emoji: "💫", 
+    file: "music/sa-susunod.mp3", 
+    duration: "5:34", 
+    dedication: "If not now, I'll still love you in every lifetime 🌌" 
+  }
+];
+
+  // ===== GLOBAL STATE =====
+  var currentSongIndex = -1;
+  var isPlaying = false;
+  var audio = document.getElementById('audio-player');
+
+  // ===== PAGE TEMPLATES =====
+  function getHomePage() {
+    return '<div class="page-view">' +
+      '<div class="page-hero">' +
+        '<h2>Welcome to Our Love Story 💖</h2>' +
+        '<p>A digital space dedicated to the most beautiful love story — Justin & Rose. Every page here holds a piece of our journey together, from our favorite songs to our cherished memories.</p>' +
+      '</div>' +
+      '<div class="page-grid">' +
+        '<div class="page-card">' +
+          '<h3>🎵 Our Music</h3>' +
+          '<p>Listen to the songs that define us. Every melody carries a memory, every lyric tells our story.</p>' +
+        '</div>' +
+        '<div class="page-card">' +
+          '<h3>📸 Gallery</h3>' +
+          '<p>A collection of our most precious moments captured in time. Each photo is a chapter of our love.</p>' +
+        '</div>' +
+        '<div class="page-card">' +
+          '<h3>💌 Messages</h3>' +
+          '<p>Sweet words exchanged between two hearts. Our conversations that make every day special.</p>' +
+        '</div>' +
+        '<div class="page-card">' +
+          '<h3>⏰ Timeline</h3>' +
+          '<p>From the first hello to forever — follow the timeline of our love story.</p>' +
+        '</div>' +
+        '<div class="page-card">' +
+          '<h3>🎁 Surprise</h3>' +
+          '<p>Something special waiting just for you. A little reminder of how much you mean to me.</p>' +
+        '</div>' +
+        '<div class="page-card">' +
+          '<h3>💕 About Us</h3>' +
+          '<p>The story of how two hearts found each other and decided to never let go.</p>' +
+        '</div>' +
+      '</div>' +
+    '</div>';
+  }
+
+  function getAboutPage() {
+    return '<div class="page-view">' +
+      '<div class="page-hero">' +
+        '<h2>About Us 💕</h2>' +
+        '<p>This is the story of Justin & Rose — two hearts that found each other and created something beautiful together. Every moment with you is a gift I cherish forever.</p>' +
+      '</div>' +
+      '<div class="page-card">' +
+        '<h3>💖 Our Story</h3>' +
+        '<p>From the very first moment, I knew there was something special about you. Your smile lights up my world, your laugh is my favorite sound, and your love is the greatest blessing in my life. This website is my love letter to you — a place where our memories live forever.</p>' +
+      '</div>' +
+      '<div class="page-card">' +
+        '<h3>🌹 Why This Exists</h3>' +
+        '<p>Because you deserve to know every single day how much you mean to me. This is more than a website — it\'s a piece of my heart, coded with love, designed with devotion, and filled with everything that makes us, us.</p>' +
+      '</div>' +
+      '<div class="page-card">' +
+        '<h3>✨ For You, Always</h3>' +
+        '<p>Rose, you are my sunshine on cloudy days, my calm in every storm, and my reason to smile. I love you more than words could ever express — but I\'ll never stop trying. 💕</p>' +
+      '</div>' +
+    '</div>';
+  }
+
+  function getGalleryPage() {
+    return '<div class="page-view">' +
+      '<div class="page-hero">' +
+        '<h2>Our Gallery 📸</h2>' +
+        '<p>Moments frozen in time — every picture tells a story of us 💕</p>' +
+      '</div>' +
+      '<div class="page-grid">' +
+        '<div class="page-card"><div class="gallery-placeholder" style="background:linear-gradient(135deg,#ff69b4,#9333ea)">💑</div></div>' +
+        '<div class="page-card"><div class="gallery-placeholder" style="background:linear-gradient(135deg,#ec4899,#7c3aed)">🌅</div></div>' +
+        '<div class="page-card"><div class="gallery-placeholder" style="background:linear-gradient(135deg,#f472b6,#a855f7)">🌹</div></div>' +
+        '<div class="page-card"><div class="gallery-placeholder" style="background:linear-gradient(135deg,#fb7185,#818cf8)">💖</div></div>' +
+        '<div class="page-card"><div class="gallery-placeholder" style="background:linear-gradient(135deg,#f43f5e,#6366f1)">✨</div></div>' +
+        '<div class="page-card"><div class="gallery-placeholder" style="background:linear-gradient(135deg,#e879f9,#c084fc)">📷</div></div>' +
+      '</div>' +
+      '<div class="page-card" style="text-align:center;margin-top:20px">' +
+        '<p>💡 Add your own photos here! Replace the emoji placeholders with &lt;img&gt; tags pointing to your images.</p>' +
+      '</div>' +
+    '</div>';
+  }
+
+  function getTimelinePage() {
+  return '<style>' +
+    '.timeline-title { text-align:center; font-size:2rem; margin-bottom:32px; display:flex; align-items:center; justify-content:center; gap:12px; color:#ff69b4; }' +
+    '.countdown-card { text-align:center; margin-bottom:40px; background:linear-gradient(135deg, rgba(255,105,180,0.1), rgba(147,51,234,0.1)); }' +
+    '.countdown-header { display:flex; align-items:center; justify-content:center; gap:8px; margin-bottom:20px; font-size:1.1rem; color:#ff69b4; font-weight:600; }' +
+    '.countdown { display:flex; justify-content:center; gap:16px; margin-bottom:16px; }' +
+    '.time-box { background:rgba(255,105,180,0.1); border:1px solid rgba(255,105,180,0.2); border-radius:12px; padding:16px 20px; min-width:80px; }' +
+    '.time-box h3 { font-size:2rem; color:#ff69b4; font-weight:700; }' +
+    '.time-box p { font-size:0.75rem; color:#d4a8ff; text-transform:uppercase; letter-spacing:1px; margin-top:4px; }' +
+    '.monthsary-date { color:#d4a8ff; font-size:0.9rem; line-height:1.6; }' +
+    '.timeline { position:relative; padding-left:32px; }' +
+    '.timeline::before { content:""; position:absolute; left:8px; top:0; bottom:0; width:2px; background:linear-gradient(to bottom, #ff69b4, #9333ea, #ff69b4); }' +
+    '.timeline-item { margin-bottom:24px; position:relative; }' +
+    '.timeline-item::before { content:"💖"; position:absolute; left:-32px; top:24px; font-size:14px; }' +
+    '.timeline-item h3 { color:#ff69b4; font-size:1rem; margin-bottom:8px; display:flex; align-items:center; gap:8px; }' +
+    '.timeline-item p { color:#d4a8ff; line-height:1.6; font-size:0.95rem; }' +
+    '.monthsary-modal { display:none; position:fixed; top:0; left:0; width:100%; height:100%; z-index:9999; align-items:center; justify-content:center; }' +
+    '.monthsary-modal.active { display:flex; }' +
+    '.modal-backdrop { position:absolute; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.7); backdrop-filter:blur(6px); }' +
+    '.modal-content { position:relative; background:linear-gradient(135deg, #2d1b4e 0%, #1a0a2e 50%, #2d1b4e 100%); border:2px solid rgba(255,105,180,0.4); border-radius:24px; padding:40px 32px; max-width:420px; width:90%; text-align:center; box-shadow:0 20px 60px rgba(255,105,180,0.2), 0 0 80px rgba(147,51,234,0.1); animation:modalSlideIn 0.5s ease-out; }' +
+    '@keyframes modalSlideIn { 0% { transform:scale(0.8) translateY(30px); opacity:0; } 100% { transform:scale(1) translateY(0); opacity:1; } }' +
+    '.monthsary-modal.closing .modal-content { animation:modalSlideOut 0.4s ease-in forwards; }' +
+    '@keyframes modalSlideOut { 0% { transform:scale(1) translateY(0); opacity:1; } 100% { transform:scale(0.8) translateY(30px); opacity:0; } }' +
+    '.modal-close-x { position:absolute; top:12px; right:16px; background:none; border:none; color:#d4a8ff; font-size:1.8rem; cursor:pointer; width:36px; height:36px; display:flex; align-items:center; justify-content:center; border-radius:50%; transition:all 0.3s; line-height:1; }' +
+    '.modal-close-x:hover { background:rgba(255,105,180,0.2); color:#ff69b4; }' +
+    '.modal-icon { font-size:3.5rem; margin-bottom:12px; animation:pulse 1.5s ease-in-out infinite; }' +
+    '@keyframes pulse { 0%, 100% { transform:scale(1); } 50% { transform:scale(1.15); } }' +
+    '.modal-title { font-size:1.8rem; background:linear-gradient(135deg, #ff69b4, #ff1493, #ff69b4); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; margin-bottom:4px; }' +
+    '.modal-subtitle { font-size:1.1rem; color:#d4a8ff; margin-bottom:16px; font-weight:500; }' +
+    '.modal-message { color:#e0d0f0; line-height:1.8; font-size:0.95rem; margin-bottom:16px; }' +
+    '.modal-date { color:#d4a8ff; font-size:0.85rem; margin-bottom:24px; opacity:0.8; }' +
+    '.modal-close-btn { background:linear-gradient(135deg, #ff69b4, #ff1493); color:white; border:none; padding:12px 32px; border-radius:30px; font-size:1rem; font-weight:600; cursor:pointer; transition:all 0.3s; box-shadow:0 4px 20px rgba(255,105,180,0.4); }' +
+    '.modal-close-btn:hover { transform:scale(1.05); box-shadow:0 6px 28px rgba(255,105,180,0.6); }' +
+    '@media (max-width:480px) { .time-box { min-width:60px; padding:12px 10px; } .time-box h3 { font-size:1.5rem; } .countdown { gap:8px; } .modal-content { padding:32px 20px; } .modal-title { font-size:1.5rem; } }' +
+  '</style>' +
+
+  '<!-- Monthsary Modal -->' +
+  '<div class="monthsary-modal" id="monthsary-modal">' +
+    '<div class="modal-backdrop" id="modal-backdrop"></div>' +
+    '<div class="modal-content">' +
+      '<button class="modal-close-x" id="modal-close-x" aria-label="Close">&times;</button>' +
+      '<div class="modal-icon" id="modal-icon">💕</div>' +
+      '<h2 class="modal-title" id="modal-title">Happy Monthsary!</h2>' +
+      '<h3 class="modal-subtitle" id="modal-month-label">Month 0</h3>' +
+      '<p class="modal-message" id="modal-message">' +
+        '#JustInLoveWithRose🤍<br>' +
+        'Another beautiful month of loving you.<br>' +
+        'Here\'s to forever and always! 🌹✨' +
+      '</p>' +
+      '<p class="modal-date" id="modal-date-label">February 23, 2025</p>' +
+      '<button class="modal-close-btn" id="modal-close-btn">Thank You, Luvv🤍!</button>' +
+    '</div>' +
+  '</div>' +
+
+  '<div class="page-content">' +
+    '<section class="timeline-section">' +
+
+      '<h2 class="timeline-title">' +
+        '<i data-lucide="heart-handshake"></i>' +
+        'Our Timeline' +
+      '</h2>' +
+
+      '<div class="glass-card countdown-card">' +
+        '<div class="countdown-header">' +
+          '<i data-lucide="calendar-heart"></i>' +
+          '<span id="countdown-header-text">Next Monthsary Countdown 💕</span>' +
+        '</div>' +
+        '<div class="countdown">' +
+          '<div class="time-box"><h3 id="days">00</h3><p>Days</p></div>' +
+          '<div class="time-box"><h3 id="hours">00</h3><p>Hours</p></div>' +
+          '<div class="time-box"><h3 id="minutes">00</h3><p>Minutes</p></div>' +
+          '<div class="time-box"><h3 id="seconds">00</h3><p>Seconds</p></div>' +
+        '</div>' +
+        '<p class="monthsary-date" id="monthsary-label">Since February 23, 2025 💖</p>' +
+      '</div>' +
+
+      '<div class="timeline">' +
+
+        '<div class="glass-card timeline-item">' +
+          '<h3><i data-lucide="gamepad-2"></i> August 2023</h3>' +
+          '<p>Our story unexpectedly started in Mobile Legends. We randomly matched in-game, and it felt funny how your name was "Hera" while mine was "Hiero." Because of that little coincidence, we added each other — not knowing it would become the start of something special.</p>' +
+        '</div>' +
+
+        '<div class="glass-card timeline-item">' +
+          '<h3><i data-lucide="camera"></i> January 6, 2024</h3>' +
+          '<p>You finally gave me your Instagram account. I honestly didn\'t expect it to be your dump account, but that simple exchange became the reason our conversations grew deeper every day.</p>' +
+        '</div>' +
+
+        '<div class="glass-card timeline-item">' +
+          '<h3><i data-lucide="messages-square"></i> January 20, 2024</h3>' +
+          '<p>You revealed your Facebook account. From there, our late-night calls, sweet moments, and endless conversations slowly became part of our everyday lives.</p>' +
+        '</div>' +
+
+        '<div class="glass-card timeline-item">' +
+          '<h3><i data-lucide="heart-handshake"></i> February 2, 2024</h3>' +
+          '<p>This was the day our feelings became more serious ❤️ We started building memories together, sharing laughs, struggles, kilig moments, and creating a connection that kept growing stronger.</p>' +
+        '</div>' +
+
+        '<div class="glass-card timeline-item">' +
+          '<h3><i data-lucide="heart"></i> February 23, 2025</h3>' +
+          '<p>After almost a year of love, patience, and unforgettable moments, we finally became official. A day that turned our story into something even more beautiful — the beginning of "us."</p>' +
+        '</div>' +
+
+        '<div class="glass-card timeline-item">' +
+          '<h3><i data-lucide="sparkles"></i> Forever &amp; Beyond</h3>' +
+          '<p>Our story is still being written ✨ Through every memory, every challenge, and every happy moment together, we continue growing side by side. Soon, one of the most special chapters of our story will finally happen — the day we meet each other in person 🤍 A moment we\'ve both been waiting for, turning all our chats, calls, and memories into something real and unforgettable.</p>' +
+        '</div>' +
+
+      '</div>' +
+    '</section>' +
+  '</div>';
+}
+
+// ===== TIMELINE PAGE INITIALIZATION =====
+// Call this function after inserting getTimelinePage() HTML into the DOM
+function initTimelinePage() {
+  var MONTHSARY_DAY = 23;
+  var ANNIVERSARY_START = new Date("February 23, 2025 00:00:00");
+
+  function formatDate(date) {
+    var months = [
+      "January", "February", "March", "April", "May", "June",
+      "July", "August", "September", "October", "November", "December"
+    ];
+    return months[date.getMonth()] + " " + date.getDate() + ", " + date.getFullYear();
+  }
+
+  function padZero(num) {
+    return num < 10 ? "0" + num : num;
+  }
+
+  function getOrdinal(n) {
+    var s = ["th", "st", "nd", "rd"];
+    var v = n % 100;
+    return n + (s[(v - 20) % 10] || s[v] || s[0]);
+  }
+
+  function getMonthNumber(targetDate) {
+    var startYear = ANNIVERSARY_START.getFullYear();
+    var startMonth = ANNIVERSARY_START.getMonth();
+    var targetYear = targetDate.getFullYear();
+    var targetMonth = targetDate.getMonth();
+    return (targetYear - startYear) * 12 + (targetMonth - startMonth);
+  }
+
+  function isMonthsaryToday() {
+    var now = new Date();
+    return now.getDate() === MONTHSARY_DAY;
+  }
+
+  function getCurrentMonthsaryNumber() {
+    var now = new Date();
+    var startYear = ANNIVERSARY_START.getFullYear();
+    var startMonth = ANNIVERSARY_START.getMonth();
+    return (now.getFullYear() - startYear) * 12 + (now.getMonth() - startMonth);
+  }
+
+  function isAnniversaryToday() {
+    var now = new Date();
+    return now.getMonth() === ANNIVERSARY_START.getMonth() &&
+           now.getDate() === ANNIVERSARY_START.getDate() &&
+           now.getFullYear() > ANNIVERSARY_START.getFullYear();
+  }
+
+  function getAnniversaryYear() {
+    var now = new Date();
+    return now.getFullYear() - ANNIVERSARY_START.getFullYear();
+  }
+
+  function getNextMonthsary() {
+    var now = new Date();
+    var currentYear = now.getFullYear();
+    var currentMonth = now.getMonth();
+    var currentDay = now.getDate();
+    var targetMonth, targetYear;
+
+    if (currentDay < MONTHSARY_DAY) {
+      targetMonth = currentMonth;
+      targetYear = currentYear;
+    } else {
+      targetMonth = currentMonth + 1;
+      targetYear = currentYear;
+    }
+
+    if (targetMonth > 11) {
+      targetMonth = targetMonth - 12;
+      targetYear = targetYear + 1;
+    }
+
+    return new Date(targetYear, targetMonth, MONTHSARY_DAY, 0, 0, 0);
+  }
+
+  function showGreetingModal() {
+    var modal = document.getElementById('monthsary-modal');
+    var modalIcon = document.getElementById('modal-icon');
+    var modalTitle = document.getElementById('modal-title');
+    var monthLabel = document.getElementById('modal-month-label');
+    var dateLabel = document.getElementById('modal-date-label');
+    var modalMessage = document.getElementById('modal-message');
+    var closeBtn = document.getElementById('modal-close-btn');
+    var closeX = document.getElementById('modal-close-x');
+    var backdrop = document.getElementById('modal-backdrop');
+
+    if (isAnniversaryToday()) {
+      var yearNum = getAnniversaryYear();
+      var ordinalYear = getOrdinal(yearNum);
+      modalIcon.textContent = '💍';
+      modalTitle.textContent = 'Happy ' + ordinalYear + ' Anniversary!';
+      monthLabel.textContent = ordinalYear + ' Year Together 🎉';
+      modalMessage.innerHTML =
+        '#JustInLoveWithRose🤍 💖<br>' +
+        ordinalYear + ' year of love, laughter, and forever! 🥂<br>' +
+        'Mahal kita, today and always! 🌹✨';
+    } else {
+      var monthNum = getCurrentMonthsaryNumber();
+      var ordinalMonth = getOrdinal(monthNum);
+      modalIcon.textContent = '💕';
+      modalTitle.textContent = 'Happy ' + ordinalMonth + ' Monthsary!';
+      monthLabel.textContent = ordinalMonth + ' Month Together 💍';
+      modalMessage.innerHTML =
+        '#JustInLoveWithRose🤍<br>' +
+        'Another beautiful month of loving you.<br>' +
+        "Here's to forever and always! 🌹✨";
+    }
+
+    if (dateLabel) {
+      dateLabel.textContent = formatDate(new Date());
+    }
+
+    modal.classList.add('active');
+    document.body.style.overflow = 'hidden';
+
+    function closeModal() {
+      modal.classList.remove('active');
+      modal.classList.add('closing');
+      document.body.style.overflow = '';
+      setTimeout(function() {
+        modal.classList.remove('closing');
+      }, 500);
+    }
+
+    closeBtn.addEventListener('click', closeModal);
+    closeX.addEventListener('click', closeModal);
+    backdrop.addEventListener('click', closeModal);
+  }
+
+  function updateCountdown() {
+    var now = new Date();
+    var headerText = document.getElementById('countdown-header-text');
+
+    if (isMonthsaryToday()) {
+      var monthNum = getCurrentMonthsaryNumber();
+      var ordinalMonth = getOrdinal(monthNum);
+
+      document.getElementById("days").innerHTML = "🎉";
+      document.getElementById("hours").innerHTML = "💖";
+      document.getElementById("minutes").innerHTML = "🌹";
+      document.getElementById("seconds").innerHTML = "✨";
+
+      if (headerText) {
+        if (isAnniversaryToday()) {
+          var yearNum = getAnniversaryYear();
+          var ordinalYear = getOrdinal(yearNum);
+          headerText.textContent = "🎉 Happy " + ordinalYear + " Anniversary! 🎉";
+        } else {
+          headerText.textContent = "🎉 Happy " + ordinalMonth + " Monthsary! 🎉";
+        }
+      }
+
+      var label = document.getElementById("monthsary-label");
+      if (label) {
+        if (isAnniversaryToday()) {
+          var yearNum2 = getAnniversaryYear();
+          var ordinalYear2 = getOrdinal(yearNum2);
+          label.innerHTML = "Happy " + ordinalYear2 + " Anniversary, #JustInLoveWithRose🤍! 💍🎉<br>Since February 23, 2025 💖";
+        } else {
+          label.innerHTML = "Happy " + ordinalMonth + " Monthsary, #JustInLoveWithRose🤍! 💖<br>Since February 23, 2025 💖";
+        }
+      }
+      return;
+    }
+
+    var nextMonthsary = getNextMonthsary();
+    var distance = nextMonthsary.getTime() - now.getTime();
+
+    var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+    var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+    var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+    document.getElementById("days").innerHTML = padZero(days);
+    document.getElementById("hours").innerHTML = padZero(hours);
+    document.getElementById("minutes").innerHTML = padZero(minutes);
+    document.getElementById("seconds").innerHTML = padZero(seconds);
+
+    if (headerText) {
+      headerText.textContent = "Next Monthsary Countdown 💕";
+    }
+
+    var nextMonthNum = getMonthNumber(nextMonthsary);
+    var ordinalNext = getOrdinal(nextMonthNum);
+    var label2 = document.getElementById("monthsary-label");
+    if (label2) {
+      label2.innerHTML = "Next: " + formatDate(nextMonthsary) + " (" + ordinalNext + " Month) <br>Since February 23, 2025 ";
+    }
+  }
+
+  // Initialize Lucide icons for the timeline page
+  if (typeof lucide !== 'undefined') {
+    lucide.createIcons();
+  }
+
+  // Start countdown
+  updateCountdown();
+  var countdownInterval = setInterval(updateCountdown, 1000);
+
+  // Show greeting modal if it's monthsary day (the 23rd)
+  if (isMonthsaryToday()) {
+    setTimeout(showGreetingModal, 800);
+  }
+
+  // Return cleanup function to clear interval when navigating away
+  return function cleanup() {
+    clearInterval(countdownInterval);
+  };
+}
+
+  // ===== FLOATING HEARTS =====
+function createFloatingHearts() {
+    const container = document.getElementById('floatingHearts');
+    if (!container) return;
+
+    const hearts = ['❤️', '💕', '💖', '💗', '💝', '💘', '🌹', '✨', '💜', '💛'];
+
+    function spawnHeart() {
+        const heart = document.createElement('span');
+        heart.classList.add('heart');
+        heart.textContent = hearts[Math.floor(Math.random() * hearts.length)];
+        heart.style.left = Math.random() * 100 + '%';
+        heart.style.fontSize = (Math.random() * 16 + 12) + 'px';
+        heart.style.animationDuration = (Math.random() * 6 + 6) + 's';
+        heart.style.animationDelay = Math.random() * 2 + 's';
+        container.appendChild(heart);
+
+        setTimeout(() => {
+            heart.remove();
+        }, 14000);
+    }
+
+    // Spawn initial hearts
+    for (let i = 0; i < 8; i++) {
+        setTimeout(spawnHeart, i * 500);
+    }
+
+    // Continue spawning
+    setInterval(spawnHeart, 2000);
+}
+
+// ===== MENU TOGGLE =====
+function initMenuToggle() {
+    const toggle = document.getElementById('menuToggle');
+    const nav = document.getElementById('mainNav');
+    if (toggle && nav) {
+        toggle.addEventListener('click', () => {
+            nav.classList.toggle('open');
+        });
+    }
+}
+
+// ===== MESSAGES PAGE =====
+function getMessagesPage() {
+    return '<div class="page-hero">' +
+        '<h2>Pinned Messages 💌</h2>' +
+        '<p>Sweet words between two hearts in love 💕</p>' +
+    '</div>' +
+    '<section class="messages-section">' +
+        '<div class="chat-container">' +
+
+            // MESSAGE 1 - Ge (February 14, 2024)
+            '<div class="chat-message">' +
+                '<img src="images/hera.jpg" alt="Hera" class="profile-pic">' +
+                '<div class="message-wrapper">' +
+                    '<div class="message-header">' +
+                        '<span class="sender-name">Ge.🙆‍♀️</span>' +
+                        '<span class="message-date">February 14, 2024</span>' +
+                    '</div>' +
+                    '<div class="message-bubble">' +
+                        'Hello luv, Good morning hihi 🤭🌻.' +
+                        ' Hmm I don\'t know where to start HAHAHAHA.' +
+                        '<br><br>' +
+                        'Anyways, hmm I\'m writing this letter cuz I want to say that' +
+                        ' I do appreciate u ever since we start talking...' +
+                        '<br><br>' +
+                        'Thank you sa time, efforts, love and assurance na binibigay mo sakin.' +
+                        ' Hindi mo alam kung gaano ako ka happy sa tuwing kausap ka at yung' +
+                        ' pakikinig mo sa mga rants ko sa buhay.' +
+                        '<br><br>' +
+                        'Please walang sukuan ah lalo na madami pa tayong ma eencounter.' +
+                        ' Ingat ka lagi lalo na sa pag momotor, always be safe.' +
+                        '<br><br>' +
+                        'Once again Happy Valentines/Heart\'s Dayyy! 💕' +
+                        '<br>' +
+                        'Goodluck sa Enrollment 🤗' +
+                        '<br><br>' +
+                        'Lovelots!!🙆🏻‍♀️💕' +
+                    '</div>' +
+                '</div>' +
+            '</div>' +
+
+            // MESSAGE 2 - Ge (April 6, 2024)
+            '<div class="chat-message">' +
+                '<img src="images/hera.jpg" alt="Hera" class="profile-pic">' +
+                '<div class="message-wrapper">' +
+                    '<div class="message-header">' +
+                        '<span class="sender-name">Ge.🙆‍♀️</span>' +
+                        '<span class="message-date">April 6, 2024</span>' +
+                    '</div>' +
+                    '<div class="message-bubble">' +
+                        'Hello, Luvv🤗. I hope this letter finds you well.' +
+                        ' Happy 3rd month of knowing each other!✨💕' +
+                        '<br><br>' +
+                        'Thank you supporting me in what I am doing.' +
+                        ' Also, thank you for giving your time, assurance, and love.' +
+                        '<br><br>' +
+                        'Time flies so fast, and I am happy that now we\'re in our third month.' +
+                        ' I look forward to many more months with you.' +
+                        '<br><br>' +
+                        'I love you, Luvvy!🙆🏻‍♀️😘' +
+                        '<br><br>' +
+                        'Note: Sorry for being quiet earlier, hihi.' +
+                    '</div>' +
+                '</div>' +
+            '</div>' +
+
+            // MESSAGE 3 - Hmp (August 6, 2024)
+            '<div class="chat-message">' +
+                '<img src="images/me.jpg" alt="Justin" class="profile-pic">' +
+                '<div class="message-wrapper">' +
+                    '<div class="message-header">' +
+                        '<span class="sender-name">Hmp.🙆‍♂️</span>' +
+                        '<span class="message-date">August 6, 2024</span>' +
+                    '</div>' +
+                    '<div class="message-bubble">' +
+                        'Happy 7th monthsary, my love! 🎉💗' +
+                        '<br><br>' +
+                        'It\'s been a month na hindi ako nakagawa ng lsm sayo,' +
+                        ' and sorry for that. Ito na babawi na hihi.' +
+                        '<br><br>' +
+                        'Before I start this, I want you to know that my heart' +
+                        ' is overflowing with love and joy because of your presence in my life.🫠' +
+                        '<br><br>' +
+                        'Even though we\'re far from each other, I can still feel your presence,' +
+                        ' your love, and your support.🤗🥰' +
+                        '<br><br>' +
+                        'Our late-night calls, the messages, and FB reels we exchange throughout' +
+                        ' the day make me feel incredibly close to you despite the distance.' +
+                        '<br><br>' +
+                        'I admire your strength, kindness, and your ability to make me feel loved' +
+                        ' and cherished even from afar.' +
+                        '<br><br>' +
+                        'Know that I am always thinking of you and dreaming of the day' +
+                        ' when we can finally close the distance and be together.🫂💗🤍' +
+                        '<br><br>' +
+                        'Again Happy 7th monthsary🙆🏻‍♂️🙆🏻‍♀️!' +
+                        ' I love you so much, my luvv!💖🙌🏻' +
+                        '<br><br>' +
+                        'With all my heart,' +
+                        '<br>' +
+                        'Justin (🙆🏻‍♂️Hmp)' +
+                    '</div>' +
+                '</div>' +
+            '</div>' +
+
+            // MESSAGE 4 - Hmp (September 6, 2024)
+            '<div class="chat-message">' +
+                '<img src="images/me.jpg" alt="Justin" class="profile-pic">' +
+                '<div class="message-wrapper">' +
+                    '<div class="message-header">' +
+                        '<span class="sender-name">Hmp.🙆‍♂️</span>' +
+                        '<span class="message-date">September 6, 2024</span>' +
+                    '</div>' +
+                    '<div class="message-bubble">' +
+                        'Happy 8th Monthsarry, luvvy ko!🎉💐' +
+                        '<br><br>' +
+                        'Grabe, sobrang bilis talaga ng mga araw.' +
+                        ' Sa bawat araw nayan is, mas lalo akong nagpapasalamat' +
+                        ' kasi you never fail to make me happy😊' +
+                        '<br><br>' +
+                        'Kahit na may mga tampuhan😑, away😤, o problema🤯,' +
+                        ' nalalampasan natin lahat through open communication,' +
+                        ' realizations, and forgiveness.' +
+                        '<br><br>' +
+                        'Na-amaze ako sa maturity mo kung paano mo hinahandle' +
+                        ' yung pag-uusap natin after ng mga tampuhan or away.' +
+                        '<br><br>' +
+                        'Thank you for being a role model to me and for helping me' +
+                        ' develop myself in so many ways.🤗🤍' +
+                        '<br><br>' +
+                        'You\u2019ve become my partner, my source of happiness,' +
+                        ' my peace, and my inspiration.🤗🥰😚' +
+                        '<br><br>' +
+                        'Happy 8th monthsarry ulit, luvvy!🙆🏻‍♂️🙆🏼‍♀️' +
+                        ' I love you😘🤍' +
+                        '<br><br>' +
+                        'See you soon luvvy ko!😘' +
+                    '</div>' +
+                '</div>' +
+            '</div>' +
+
+            // MESSAGE 5 - Ge (September 6, 2024)
+            '<div class="chat-message">' +
+                '<img src="images/hera.jpg" alt="Hera" class="profile-pic">' +
+                '<div class="message-wrapper">' +
+                    '<div class="message-header">' +
+                        '<span class="sender-name">Ge.🙆‍♀️</span>' +
+                        '<span class="message-date">September 6, 2024</span>' +
+                    '</div>' +
+                    '<div class="message-bubble">' +
+                        'Hello my luvv, another month has passed,' +
+                        ' and I am happy that you have been with me' +
+                        ' up until this 8th month. Happy Monthsary!!😘🤗✨' +
+                        '<br><br>' +
+                        'Fresh na fresh pa din sa utak ko yung memories natin together,' +
+                        ' kung paanong sa laro tayo nagsimula.' +
+                        '<br><br>' +
+                        'Little did I know that God had planned something else for me,' +
+                        ' and there I met you😬 talked to you🤭 and boom😱!' +
+                        '<br><br>' +
+                        'I never thought na susubok muli ako sa LDR,' +
+                        ' pero hindi ko din kasi malalaman kung mag wowork' +
+                        ' kung hindi susubukan e.' +
+                        '<br><br>' +
+                        'Thank you for doing your best luvv,' +
+                        ' super proud of you😘🤍' +
+                        '<br><br>' +
+                        'This relationship is not just about me;' +
+                        ' it is also about you, and "US"👥🤍' +
+                        '<br><br>' +
+                        'You are the best gift that I have ever received this year,' +
+                        ' and I am grateful that I am able to meet you.' +
+                        '<br><br>' +
+                        'Looking forward to meeting you in person next year,' +
+                        ' super excited na ako🥺🤍' +
+                        '<br><br>' +
+                        'I love you always, luvvy ko!🫂🥺' +
+                        ' Take care and see you soon😘🤍' +
+                        '<br><br>' +
+                        'Again, Happy 8th monthsary!🥰🥰🥰' +
+                    '</div>' +
+                '</div>' +
+            '</div>' +
+
+            // MESSAGE 6 - Hmp (May 23, 2025)
+            '<div class="chat-message">' +
+                '<img src="images/me.jpg" alt="Justin" class="profile-pic">' +
+                '<div class="message-wrapper">' +
+                    '<div class="message-header">' +
+                        '<span class="sender-name">Hmp.🙆‍♂️</span>' +
+                        '<span class="message-date">May 23, 2025</span>' +
+                    '</div>' +
+                    '<div class="message-bubble">' +
+                        'Happy 8th Monthsarry, luvvy ko!🎉💐' +
+                        '<br><br>' +
+                        'Grabe, sobrang bilis talaga ng mga araw.' +
+                        ' Sa bawat araw nayan is, mas lalo akong nagpapasalamat' +
+                        ' kasi you never fail to make me happy😊' +
+                        '<br><br>' +
+                        'Kahit na may mga tampuhan😑, away😤, o problema🤯,' +
+                        ' nalalampasan natin lahat through open communication,' +
+                        ' realizations, and forgiveness.' +
+                        '<br><br>' +
+                        'Na-amaze ako sa maturity mo kung paano mo hinahandle' +
+                        ' yung pag-uusap natin after ng mga tampuhan or away.' +
+                        '<br><br>' +
+                        'Thank you for being a role model to me and for helping me' +
+                        ' develop myself in so many ways.🤗🤍' +
+                        '<br><br>' +
+                        'You\u2019ve become my partner, my source of happiness,' +
+                        ' my peace, and my inspiration.🤗🥰😚' +
+                        '<br><br>' +
+                        'Happy 8th monthsarry ulit, luvvy!🙆🏻‍♂️🙆🏼‍♀️' +
+                        ' I love you😘🤍' +
+                        '<br><br>' +
+                        'See you soon luvvy ko!😘' +
+                    '</div>' +
+                '</div>' +
+            '</div>' +
+
+        '</div>' +
+    '</section>';
+}
+
+  function getMusicPage() {
+    var songListHTML = '';
+    for (var i = 0; i < songs.length; i++) {
+      var s = songs[i];
+      var isActive = (i === currentSongIndex) ? ' active' : '';
+      var heartClass = '';
+      var heartText = '♡';
+      if (i === 4) { heartClass = ' liked'; heartText = '♥'; }
+
+      var indicatorHTML;
+      if (i === currentSongIndex && isPlaying) {
+        indicatorHTML = '<div class="mini-bars"><div class="mini-bar"></div><div class="mini-bar"></div><div class="mini-bar"></div></div>';
+      } else {
+        indicatorHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><polygon points="8,5 19,12 8,19"/></svg>';
+      }
+
+      songListHTML += '<li class="song-item' + isActive + '" data-index="' + i + '" onclick="handleSongClick(event, ' + i + ')">' +
+        '<span class="song-number">' + (i + 1) + '</span>' +
+        '<div class="song-play-indicator">' + indicatorHTML + '</div>' +
+        '<div class="song-thumb song-thumb-' + (i + 1) + '">' + s.emoji + '</div>' +
+        '<div class="song-details">' +
+          '<h3>' + s.title + '</h3>' +
+          '<p>' + s.artist + '</p>' +
+          '<div class="song-dedication">💭 "' + s.dedication + '"</div>' +
+        '</div>' +
+        '<span class="song-duration">' + s.duration + '</span>' +
+        '<span class="song-heart' + heartClass + '" title="Like" onclick="handleHeartClick(event, this)">' + heartText + '</span>' +
+      '</li>';
+    }
+
+    var npStatusText = currentSongIndex >= 0 ? (isPlaying ? 'Now Playing' : 'Paused') : 'Select a song';
+    var npTitleText = currentSongIndex >= 0 ? songs[currentSongIndex].title : 'Our Playlist';
+    var npArtistText = currentSongIndex >= 0 ? songs[currentSongIndex].artist + ' 💖' : 'Justin & Rose 💖';
+    var discClass = isPlaying ? ' spinning' : '';
+    var visClass = isPlaying ? ' active' : '';
+
+    return '<div class="page-view">' +
+      '<section class="music-section">' +
+        '<h2>Our Songs 🎵</h2>' +
+        '<p class="music-subtitle">The soundtrack of our love story — every song tells a piece of us 💕</p>' +
+
+        '<div class="now-playing">' +
+          '<div class="now-playing-content">' +
+            '<div class="now-playing-label">' +
+              '<div class="pulse-dot" id="pulse-dot"></div>' +
+              '<span id="np-status">' + npStatusText + '</span>' +
+            '</div>' +
+            '<div class="now-playing-disc' + discClass + '" id="disc">' +
+              '<div class="disc-ring"></div>' +
+              '<div class="disc-center">🎵</div>' +
+            '</div>' +
+            '<div class="now-playing-title" id="np-title">' + npTitleText + '</div>' +
+            '<div class="now-playing-artist" id="np-artist">' + npArtistText + '</div>' +
+            '<div class="visualizer' + visClass + '" id="visualizer">' +
+              '<div class="visualizer-bar" style="height:4px"></div>' +
+              '<div class="visualizer-bar" style="height:8px"></div>' +
+              '<div class="visualizer-bar" style="height:12px"></div>' +
+              '<div class="visualizer-bar" style="height:6px"></div>' +
+              '<div class="visualizer-bar" style="height:16px"></div>' +
+              '<div class="visualizer-bar" style="height:10px"></div>' +
+              '<div class="visualizer-bar" style="height:20px"></div>' +
+              '<div class="visualizer-bar" style="height:14px"></div>' +
+              '<div class="visualizer-bar" style="height:8px"></div>' +
+              '<div class="visualizer-bar" style="height:18px"></div>' +
+              '<div class="visualizer-bar" style="height:6px"></div>' +
+              '<div class="visualizer-bar" style="height:12px"></div>' +
+              '<div class="visualizer-bar" style="height:22px"></div>' +
+              '<div class="visualizer-bar" style="height:10px"></div>' +
+              '<div class="visualizer-bar" style="height:16px"></div>' +
+              '<div class="visualizer-bar" style="height:8px"></div>' +
+            '</div>' +
+            '<div class="audio-controls">' +
+              '<button class="ctrl-btn" onclick="prevSong()" title="Previous"><svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M6 6h2v12H6zm3.5 6l8.5 6V6z"/></svg></button>' +
+              '<button class="ctrl-btn play-btn" onclick="togglePlay()" title="Play" id="page-play-btn"><svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" id="page-play-icon">' + (isPlaying ? '<rect x="7" y="5" width="3" height="14"/><rect x="14" y="5" width="3" height="14"/>' : '<polygon points="8,5 19,12 8,19"/>') + '</svg></button>' +
+              '<button class="ctrl-btn" onclick="nextSong()" title="Next"><svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M6 18l8.5-6L6 6v12zM16 6v12h2V6h-2z"/></svg></button>' +
+            '</div>' +
+            '<div class="progress-container">' +
+              '<span class="progress-time" id="page-current-time">0:00</span>' +
+              '<div class="progress-bar-wrapper" id="page-progress-wrapper" onclick="seekFromPage(event)">' +
+                '<div class="progress-bar-fill" id="page-progress-fill"></div>' +
+              '</div>' +
+              '<span class="progress-time" id="page-total-time">0:00</span>' +
+            '</div>' +
+          '</div>' +
+        '</div>' +
+
+        '<div class="song-list-header">' +
+          '<div class="song-list-title">🎶 Playlist</div>' +
+          '<div class="song-count">' + songs.length + ' songs</div>' +
+        '</div>' +
+        '<ul class="song-list" id="song-list">' + songListHTML + '</ul>' +
+
+        // '<div class="spotify-section">' +
+        //   '<div class="spotify-header">' +
+        //     '<svg class="spotify-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z"/></svg>' +
+        //     '<h3>Listen on Spotify 🎧</h3>' +
+        //   '</div>' +
+        //   '<div class="spotify-grid">' +
+        //     '<div class="spotify-embed"><iframe src="https://open.spotify.com/embed/track/3wrMEMBDqMSfGOKghHPJWP?utm_source=generator&theme=0" height="152" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe></div>' +
+        //     '<div class="spotify-embed"><iframe src="https://open.spotify.com/embed/track/5FjDBJRomEBF7VBLbatMR7?utm_source=generator&theme=0" height="152" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe></div>' +
+        //     '<div class="spotify-embed"><iframe src="https://open.spotify.com/embed/track/0K6vSBqVMJfVjFOaxOPPJV?utm_source=generator&theme=0" height="152" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe></div>' +
+        //     '<div class="spotify-embed"><iframe src="https://open.spotify.com/embed/track/4PdLaGZubp4lghChqp8erB?utm_source=generator&theme=0" height="152" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe></div>' +
+        //   '</div>' +
+        // '</div>' +
+      '</section>' +
+    '</div>';
+  }
+
+  function getSurprisePage() {
+    return '<div class="page-view">' +
+      '<div class="surprise-box">' +
+        '<div class="surprise-emoji">🎁</div>' +
+        '<h2>A Special Surprise For You</h2>' +
+        '<p>Rose, every day with you feels like unwrapping a gift. You are the most beautiful surprise life has ever given me. I promise to love you, cherish you, and make you smile every single day. You are my forever. 💖</p>' +
+      '</div>' +
+      '<div class="page-grid">' +
+        '<div class="page-card" style="text-align:center">' +
+          '<h3>🌟 Reason #1</h3>' +
+          '<p>Your smile makes my entire world brighter. Even on the darkest days, one look at you and everything feels okay.</p>' +
+        '</div>' +
+        '<div class="page-card" style="text-align:center">' +
+          '<h3>💫 Reason #2</h3>' +
+          '<p>The way you laugh — it\'s the most beautiful sound in the universe. I\'d do anything to hear it every day.</p>' +
+        '</div>' +
+        '<div class="page-card" style="text-align:center">' +
+          '<h3>❤️ Reason #3</h3>' +
+          '<p>You love me for who I am, flaws and all. With you, I feel safe, understood, and truly loved.</p>' +
+        '</div>' +
+      '</div>' +
+    '</div>';
+  }
+
+  // ===== ROUTING =====
+  var currentPage = 'home';
+
+  function navigateTo(page) {
+    currentPage = page;
+    window.location.hash = page;
+    renderPage();
+    // Close mobile menu
+    var nav = document.getElementById('main-nav');
+    if (nav) nav.classList.remove('active');
+    // Scroll to top
+    window.scrollTo(0, 0);
+  }
+
+  var timelineCleanup = null; // Add this at the top with your global variables
+
+function renderPage() {
+    var content = document.getElementById('page-content');
+    var pageMap = {
+      'home': getHomePage,
+      'about': getAboutPage,
+      'gallery': getGalleryPage,
+      'timeline': getTimelinePage,
+      'messages': getMessagesPage,
+      'music': getMusicPage,
+      'surprise': getSurprisePage
+    };
+
+    // Clean up previous timeline interval if navigating away
+    if (timelineCleanup) {
+      timelineCleanup();
+      timelineCleanup = null;
+    }
+
+    var pageFn = pageMap[currentPage] || getHomePage;
+    content.innerHTML = pageFn();
+
+    // Update nav active state
+    var navLinks = document.querySelectorAll('nav a');
+    navLinks.forEach(function(link) {
+      link.classList.remove('active-nav');
+      if (link.getAttribute('data-page') === currentPage) {
+        link.classList.add('active-nav');
+      }
+    });
+
+    // Initialize timeline countdown when on timeline page
+    if (currentPage === 'timeline') {
+      timelineCleanup = initTimelinePage();
+    }
+
+    // If on music page, sync progress display
+    if (currentPage === 'music') {
+      syncMusicPageUI();
+    }
+}
+
+
+  // Handle hash changes (back/forward)
+  window.addEventListener('hashchange', function() {
+    var hash = window.location.hash.replace('#', '') || 'home';
+    currentPage = hash;
+    renderPage();
+  });
+
+  // ===== MUSIC PLAYER LOGIC =====
+  function formatTime(sec) {
+    if (isNaN(sec) || sec < 0) return '0:00';
+    var m = Math.floor(sec / 60);
+    var s = Math.floor(sec % 60);
+    return m + ':' + (s < 10 ? '0' : '') + s;
+  }
+
+  function selectSong(index) {
+    if (index < 0 || index >= songs.length) return;
+    currentSongIndex = index;
+
+    // Set audio source and play
+    audio.src = songs[index].file;
+    audio.load();
+    audio.play().then(function() {
+      isPlaying = true;
+      updateAllUI();
+    }).catch(function(e) {
+      // Autoplay might be blocked, still update UI
+      console.log('Playback requires user interaction:', e);
+      isPlaying = true;
+      updateAllUI();
+    });
+  }
+
+  function togglePlay() {
+    if (currentSongIndex === -1) {
+      selectSong(0);
+      return;
+    }
+
+    if (isPlaying) {
+      audio.pause();
+      isPlaying = false;
+    } else {
+      audio.play().catch(function() {});
+      isPlaying = true;
+    }
+    updateAllUI();
+  }
+
+  function prevSong() {
+    var newIndex = currentSongIndex <= 0 ? songs.length - 1 : currentSongIndex - 1;
+    selectSong(newIndex);
+  }
+
+  function nextSong() {
+    var newIndex = currentSongIndex >= songs.length - 1 ? 0 : currentSongIndex + 1;
+    selectSong(newIndex);
+  }
+
+  function handleSongClick(e, index) {
+    if (e.target.classList.contains('song-heart')) return;
+    selectSong(index);
+  }
+
+  function handleHeartClick(e, el) {
+    e.stopPropagation();
+    if (el.classList.contains('liked')) {
+      el.classList.remove('liked');
+      el.textContent = '♡';
+    } else {
+      el.classList.add('liked');
+      el.textContent = '♥';
+    }
+  }
+
+  function seekFromPage(e) {
+    var wrapper = document.getElementById('page-progress-wrapper');
+    if (!wrapper || isNaN(audio.duration)) return;
+    var rect = wrapper.getBoundingClientRect();
+    var clickX = e.clientX - rect.left;
+    var percent = clickX / rect.width;
+    audio.currentTime = percent * audio.duration;
+  }
+
+  // ===== UPDATE ALL UI =====
+  function updateAllUI() {
+    updateMiniPlayer();
+    if (currentPage === 'music') {
+      syncMusicPageUI();
+    }
+  }
+
+  function updateMiniPlayer() {
+    var miniPlayer = document.getElementById('mini-player');
+    var miniTitle = document.getElementById('mini-title');
+    var miniArtist = document.getElementById('mini-artist');
+    var miniDisc = document.getElementById('mini-disc');
+    var miniVis = document.getElementById('mini-visualizer');
+    var miniPlayIcon = document.getElementById('mini-play-icon');
+
+    if (currentSongIndex >= 0) {
+      miniPlayer.classList.add('visible');
+      miniTitle.textContent = songs[currentSongIndex].title;
+      miniArtist.textContent = songs[currentSongIndex].artist;
+
+      if (isPlaying) {
+        miniDisc.classList.add('spinning');
+        miniVis.classList.add('active');
+        miniPlayIcon.innerHTML = '<rect x="7" y="5" width="3" height="14"/><rect x="14" y="5" width="3" height="14"/>';
+      } else {
+        miniDisc.classList.remove('spinning');
+        miniVis.classList.remove('active');
+        miniPlayIcon.innerHTML = '<polygon points="8,5 19,12 8,19"/>';
+      }
+    } else {
+      miniPlayer.classList.remove('visible');
+    }
+  }
+
+  function syncMusicPageUI() {
+    var disc = document.getElementById('disc');
+    var visualizer = document.getElementById('visualizer');
+    var npTitle = document.getElementById('np-title');
+    var npArtist = document.getElementById('np-artist');
+    var npStatus = document.getElementById('np-status');
+    var pulseDot = document.getElementById('pulse-dot');
+    var pagePlayIcon = document.getElementById('page-play-icon');
+
+    if (!disc) return; // Not on music page
+
+    if (currentSongIndex >= 0) {
+      npTitle.textContent = songs[currentSongIndex].title;
+      npArtist.textContent = songs[currentSongIndex].artist + ' 💖';
+
+      if (isPlaying) {
+        disc.classList.add('spinning');
+        visualizer.classList.add('active');
+        npStatus.textContent = 'Now Playing';
+        if (pulseDot) pulseDot.style.background = '#ff1493';
+        if (pagePlayIcon) pagePlayIcon.innerHTML = '<rect x="7" y="5" width="3" height="14"/><rect x="14" y="5" width="3" height="14"/>';
+      } else {
+        disc.classList.remove('spinning');
+        visualizer.classList.remove('active');
+        npStatus.textContent = 'Paused';
+        if (pulseDot) pulseDot.style.background = '#d4a8ff';
+        if (pagePlayIcon) pagePlayIcon.innerHTML = '<polygon points="8,5 19,12 8,19"/>';
+      }
+    }
+
+    // Update song list active states
+    var songItems = document.querySelectorAll('.song-item');
+    songItems.forEach(function(item, idx) {
+      item.classList.remove('active');
+      var indicator = item.querySelector('.song-play-indicator');
+      if (idx === currentSongIndex) {
+        item.classList.add('active');
+        if (indicator && isPlaying) {
+          indicator.innerHTML = '<div class="mini-bars"><div class="mini-bar"></div><div class="mini-bar"></div><div class="mini-bar"></div></div>';
+        } else if (indicator) {
+          indicator.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><polygon points="8,5 19,12 8,19"/></svg>';
+        }
+      } else {
+        if (indicator) {
+          indicator.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><polygon points="8,5 19,12 8,19"/></svg>';
+        }
+      }
+    });
+  }
+
+  // ===== AUDIO TIME UPDATE =====
+  audio.addEventListener('timeupdate', function() {
+    if (isNaN(audio.duration)) return;
+    var percent = (audio.currentTime / audio.duration) * 100;
+
+    // Mini player progress
+    var miniFill = document.getElementById('mini-progress-fill');
+    var miniCurTime = document.getElementById('mini-current-time');
+    var miniTotTime = document.getElementById('mini-total-time');
+    if (miniFill) miniFill.style.width = percent + '%';
+    if (miniCurTime) miniCurTime.textContent = formatTime(audio.currentTime);
+    if (miniTotTime) miniTotTime.textContent = formatTime(audio.duration);
+
+    // Music page progress (if visible)
+    var pageFill = document.getElementById('page-progress-fill');
+    var pageCurTime = document.getElementById('page-current-time');
+    var pageTotTime = document.getElementById('page-total-time');
+    if (pageFill) pageFill.style.width = percent + '%';
+    if (pageCurTime) pageCurTime.textContent = formatTime(audio.currentTime);
+    if (pageTotTime) pageTotTime.textContent = formatTime(audio.duration);
+  });
+
+  // Auto-next on song end
+  audio.addEventListener('ended', function() {
+    nextSong();
+  });
+
+  // Mini player progress click
+  document.getElementById('mini-progress-wrapper').addEventListener('click', function(e) {
+    if (isNaN(audio.duration)) return;
+    var rect = this.getBoundingClientRect();
+    var clickX = e.clientX - rect.left;
+    var percent = clickX / rect.width;
+    audio.currentTime = percent * audio.duration;
+  });
+
+  // Mini player controls
+  document.getElementById('mini-play-btn').addEventListener('click', togglePlay);
+  document.getElementById('mini-prev-btn').addEventListener('click', prevSong);
+  document.getElementById('mini-next-btn').addEventListener('click', nextSong);
+
+  // ===== FLOATING HEARTS =====
+  function createFloatingHearts() {
+    var container = document.getElementById('floating-hearts');
+    var hearts = ['💖', '💕', '💗', '💓', '❤️', '🌹', '✨', '🎵', '🎶'];
+    for (var i = 0; i < 12; i++) {
+      var heart = document.createElement('div');
+      heart.className = 'floating-heart';
+      heart.textContent = hearts[Math.floor(Math.random() * hearts.length)];
+      heart.style.left = Math.random() * 100 + '%';
+      heart.style.animationDuration = (8 + Math.random() * 12) + 's';
+      heart.style.animationDelay = (Math.random() * 10) + 's';
+      heart.style.fontSize = (14 + Math.random() * 16) + 'px';
+      container.appendChild(heart);
+    }
+  }
+
+  // ===== MOBILE MENU =====
+  var menuToggle = document.getElementById('menu-toggle');
+  var mainNav = document.getElementById('main-nav');
+  if (menuToggle && mainNav) {
+    menuToggle.addEventListener('click', function() {
+      mainNav.classList.toggle('active');
+    });
+  }
+
+  // ===== KEYBOARD SHORTCUTS =====
+  document.addEventListener('keydown', function(e) {
+    if (e.code === 'Space') {
+      e.preventDefault();
+      togglePlay();
+    } else if (e.code === 'ArrowRight') {
+      nextSong();
+    } else if (e.code === 'ArrowLeft') {
+      prevSong();
+    }
+  });
+
+  // ===== INIT =====
+  createFloatingHearts();
+
+  // Read initial hash
+  var initHash = window.location.hash.replace('#', '') || 'home';
+  currentPage = initHash;
+  renderPage();
+  </script>
+</body>
+</html>
