@@ -1,3 +1,3 @@
 # JustInLoveWithRose
 
-![image alt] (https://github.com/zxiantheprogrammer/JustInLoveWithRose/blob/2220522099a40426e7493886c726dbdfbfd0c332/photo5.jpg)
+![image alt] (https://raw.githubusercontent.com/zxiantheprogrammer/JustInLoveWithRose/97b6f21be8dc990eba58055a12bda7e9c773d869/photo5.jpg)
